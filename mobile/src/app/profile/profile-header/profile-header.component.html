@@ -1,0 +1,23 @@
+<ion-grid class="background-light" no-padding>
+    <ion-row justify-content-between padding>
+        <ion-avatar class="img-fill-space">
+            <ion-img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></ion-img>
+        </ion-avatar>
+        <ion-col size="9" no-padding>
+            <ion-row id="follow-details">
+                <ion-col *ngFor="let detail of followDetails" align-items-stretch>
+                    <ion-row justify-content-center>
+                        <ion-label class="text-bold">{{ detail.number }}</ion-label>
+                    </ion-row>
+                    <ion-row justify-content-center>
+                        <ion-label color="medium" text-capitalize>{{ detail.label }}</ion-label>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <ion-button (click)="openProfileForm()" size="small" fill="outline" expand="block">Modifier le profil</ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row padding>
+        {{ '@' + user.pseudo }}
+    </ion-row>
+</ion-grid>

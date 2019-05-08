@@ -9,3 +9,28 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+.img-fill-space {
+  height: 75px;
+  width: 75px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.background-light {
+  background-color: var(--ion-color-light);
+}
+
+.fill-full-height {
+  height: 100%;
+}
+
+.fill-full-width {
+  width: 100% !important;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}

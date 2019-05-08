@@ -1,0 +1,54 @@
+<ion-grid no-padding>
+    <ion-row>
+
+        <ion-col>
+            <ion-list>
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row justify-content-between>
+                            <ion-label color='primary'>Name</ion-label>
+                            <ion-label>{{ user.firstname }}</ion-label>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row justify-content-between>
+                            <ion-label color='primary'>Lastname</ion-label>
+                            <ion-label>{{ user.lastname }}</ion-label>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row justify-content-between>
+                            <ion-label color='primary'>Week ratio</ion-label>
+                            <ion-badge color="secondary">{{ user.eventWeekRate }}</ion-badge>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row justify-content-between>
+                            <ion-label color='primary'>Events</ion-label>
+                            <ion-badge color="secondary">{{ user.eventSum }}</ion-badge>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row justify-content-between>
+                            <ion-label color='primary'>Ratio</ion-label>
+                            <ion-badge color="secondary">{{ user.eventTotalRate }}</ion-badge>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+
+    </ion-row>
+</ion-grid>

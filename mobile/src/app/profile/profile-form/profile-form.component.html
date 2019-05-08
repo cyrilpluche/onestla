@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+                Fermer
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Modifier profil</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<form class="fill-full-width fill-full-height" (ngSubmit)="saveUserInformations()">
+    <ion-grid no-margin>
+        <ion-row justify-content-center>
+
+            <ion-item class="fill-full-width">
+                <ion-label position="floating">Nom</ion-label>
+                <ion-input [name]="'firstname'" placeholder="Nom" [(ngModel)]="user.firstname"></ion-input>
+            </ion-item>
+
+            <ion-item class="fill-full-width">
+                <ion-label position="floating">Prénom</ion-label>
+                <ion-input [name]="'lastname'" placeholder="Prénom" [(ngModel)]="user.lastname"></ion-input>
+            </ion-item>
+
+            <ion-item class="fill-full-width">
+                <ion-label position="floating">Date de naissance</ion-label>
+                <ion-input [name]="'dateOfBirth'" placeholder="02/07/1996" [(ngModel)]="user.dateOfBirth"></ion-input>
+            </ion-item>
+
+            <ion-item class="fill-full-width">
+                <ion-label position="floating">Pseudo</ion-label>
+                <ion-input [name]="'pseudo'" placeholder="pseudo" [(ngModel)]="user.pseudo"></ion-input>
+            </ion-item>
+
+        </ion-row>
+        <ion-row justify-content-center>
+            <ion-button color="primary" type="submit">Save</ion-button>
+        </ion-row>
+    </ion-grid>
+</form>

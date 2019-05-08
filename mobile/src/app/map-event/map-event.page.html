@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            leaflet Map
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="fill-full-height container">
+    <app-map-leaflet *ngIf="clubs" [clubs]="clubs" (onClubSelected)="retrieveClub($event)"></app-map-leaflet>
+
+    <ion-slides id="map-detail" pager="true">
+
+        <ion-slide *ngIf="!clubSelected; else clubDetails">
+            <h1>Selectionnez un lieu</h1>
+        </ion-slide>
+
+        <ng-template #clubDetails>
+            <ion-slide>
+                <ion-grid class="fill-full-width fill-full-height">
+                    <ion-row class="fill-full-width">
+                        <ion-col size="12" no-padding>
+                            <ion-card-subtitle text-uppercase text-start>{{ clubSelected.type }}</ion-card-subtitle>
+                            <ion-card-title text-start>{{ clubSelected.name }}</ion-card-title>
+                            <ion-card-content text-start>
+                                {{ clubSelected.description }}
+                            </ion-card-content>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-slide>
+            <ion-slide class="scroll-y">
+                <ion-grid class="fill-full-width fill-full-height">
+                    <ion-row class="fill-full-width">
+                        <ion-list class="fill-full-width" lines="full">
+                            <ion-item class="fill-full-width" *ngFor="let friend of friendList">
+                                <ion-avatar slot="start">
+                                    <img [src]="friend.profilePicture">
+                                </ion-avatar>
+                                <ion-label>{{ friend.pseudo }}</ion-label>
+                            </ion-item>
+                            <ion-item class="empty-block" lines="none"></ion-item>
+                        </ion-list>
+                    </ion-row>
+                </ion-grid>
+            </ion-slide>
+        </ng-template>
+
+    </ion-slides>
+
+</ion-content>

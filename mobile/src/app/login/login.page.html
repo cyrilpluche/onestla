@@ -1,0 +1,21 @@
+<ion-content padding-top>
+    <form class="fill-full-width fill-full-height" [formGroup]="loginForm" (ngSubmit)="submit()">
+
+        <ion-item class="fill-full-width">
+            <ion-label position="floating">Login</ion-label>
+            <ion-input formControlName="login" placeholder="pseudo"></ion-input>
+        </ion-item>
+
+        <ion-item class="fill-full-width" margin-bottom>
+            <ion-label position="floating">Mot de passe</ion-label>
+            <ion-input formControlName="password" placeholder="Mot de passe"></ion-input>
+        </ion-item>
+
+        <ion-grid no-padding>
+            <ion-row justify-content-center>
+                <ion-button color="primary" type="submit" [disabled]="!loginForm.valid">Me connecter</ion-button>
+            </ion-row>
+        </ion-grid>
+
+    </form>
+</ion-content>

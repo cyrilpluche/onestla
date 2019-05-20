@@ -1,5 +1,9 @@
+const Authentication = require('./Authentication');
 const Club = require('./Club');
+const User = require('./User');
 
 module.exports = {
-    Club
+    Authentication,
+    Club,
+    User
 };

@@ -1,8 +1,8 @@
-const Club = require('../models').Club
+const User = require('../models').User
 
 module.exports = {
     create (req, res, next) {
-        Club.create(req.body)
+        User.create(req.body)
             .then(club => {
                 res.send(club)
             })
@@ -12,7 +12,7 @@ module.exports = {
     },
 
     findAll (req, res, next) {
-        Club.find(req.query)
+        User.find(req.query)
             .then(clubs => {
                 res.send(clubs)
             })
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     updateOne (req, res, next) {
-        Club.updateOne(req.query, req.body)
+        User.updateOne(req.query, req.body)
             .then(isUpdate => res.send(isUpdate) )
             .catch(err => res.status(400).send({ error: err.message }) )
     }

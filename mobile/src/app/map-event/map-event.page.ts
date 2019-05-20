@@ -16,7 +16,12 @@ export class MapEventPage {
     friendList: User[] = []
 
     ionViewWillEnter() {
-        this.clubs = ClubService.getClubs()
+        ClubService.getClubs().then(clubs => {
+            for (let club of clubs ) {
+                club.iconUrl = 'https://pbs.twimg.com/profile_images/2883144287/d0fcaf6edc8c2886763b8e3b2cc91436_400x400.jpeg'
+            }
+            this.clubs = clubs
+        })
         this.friendList = ClubService.getFriendList()
     }
 

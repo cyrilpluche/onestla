@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Club} from "./club.class";
 import {User} from "../user/user.class";
+import {ApiHelper} from "../../helpers/api.helper";
+import {AxiosResponse} from "axios";
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +14,8 @@ export class ClubService {
 
     }
 
-    static getClubs(): Club[] {
-        if (environment.fakeData) {
+    static getClubs() {
+        /*if (!environment.fakeData) {
             let c1 = new Club()
             c1.id = 1
             c1.name = 'Panama Café'
@@ -24,8 +26,9 @@ export class ClubService {
             c1.iconUrl = 'https://pbs.twimg.com/profile_images/2883144287/d0fcaf6edc8c2886763b8e3b2cc91436_400x400.jpeg'
             return [c1]
         } else {
-            return []
-        }
+            return ApiHelper.get('/club/find_all')
+        }*/
+        return ApiHelper.get('/club/find_all')
     }
 
     static getFriendList(): User[] {

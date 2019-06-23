@@ -1,6 +1,8 @@
 <ion-content padding-top>
     <form class="fill-full-width fill-full-height" [formGroup]="loginForm" (ngSubmit)="submit()">
 
+        <oel-input-text></oel-input-text>
+
         <ion-item class="fill-full-width">
             <ion-label position="floating">Login</ion-label>
             <ion-input formControlName="login" placeholder="pseudo"></ion-input>

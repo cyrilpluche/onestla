@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ProfileFormComponent} from "./profile/profile-form/profile-form.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {LibraryModule} from "./library/library.module";
 
 @NgModule({
     declarations: [

@@ -30,7 +30,8 @@ app.use('/api', indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  res.status(404).send({error: 'Not found'})
+  //next(createError(404));
 });
 
 // error handler

@@ -33,7 +33,13 @@ const userSchema = new Schema({
         type: String,
         trim: true,
         required: [true, 'Password is required']
-    }
+    },
+    notifications: [
+        {
+            message: String,
+            state: Number
+        }
+    ]
 });
 
 module.exports = mongoose.model('User', userSchema)

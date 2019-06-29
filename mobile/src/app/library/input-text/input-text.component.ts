@@ -9,20 +9,15 @@ import {ModalController} from "@ionic/angular";
 })
 export class InputTextComponent implements OnInit {
 
-    @Input() user: User
+    @Input() placeholder: string = ''
+    @Input() name: string = ''
+    @Input() label: string = ''
+    @Input() type: 'text' | 'password' = 'text'
 
-    constructor(public modalController: ModalController) {
+    constructor() {
     }
 
     ngOnInit() {
-    }
-
-    saveUserInformations() {
-        console.log(this.user)
-    }
-
-    dismiss() {
-        this.modalController.dismiss()
     }
 
 }

@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true" padding-top>
     <ion-grid>
         <ion-row justify-content-center margin-bottom>
-            <ion-img class="logo" [src]="logoUrl"></ion-img>
+            <ion-img (click)="test()" class="logo" [src]="logoUrl"></ion-img>
         </ion-row>
         <form class="fill-full-width fill-full-height" [formGroup]="selectedForm" (ngSubmit)="submit()">
             <ion-item class="oel-input" *ngFor="let field of selectedFields">

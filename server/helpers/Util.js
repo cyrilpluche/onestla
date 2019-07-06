@@ -15,6 +15,10 @@ module.exports = {
         return object === undefined || object === null
     },
 
+    isEmpty(array) {
+        return array === undefined || array === null || array.length === 0
+    },
+
     isStrNull(object) {
         return object === undefined || object === null || object === ''
     },

@@ -18,9 +18,8 @@ module.exports = {
 
     findAll(req, res, next) {
         User.find(req.query)
-            .then(clubs => {
-                res.send(clubs)
-            })
+            .select("-password")
+            .then(users => res.send(users))
             .catch(err => {
                 res.status(400).send({error: err.message})
             })
@@ -45,21 +44,35 @@ module.exports = {
     // MIDDLEWARE CHECKING
 
     checkSignup(req, res, next) {
-        if (req.body.password !== req.body.passwordConfirmation) {
-            Request.errorHandler(res, Status.USER_ERROR, 'Password confirmation is not equal')
-        } else if (!Util.isPassword(req.body.password)) {
-            Request.errorHandler(res, Status.USER_ERROR, 'Password must be at least 8 characters')
-        } else {
-            bcrypt.hash(req.body.password, Bcrypt.saltRounds)
-                .then(hash => {
-                    req.body.password = hash
-                    req.body.status = 0
-                    next()
-                })
-                .catch(err => {
-                    Request.errorHandler(res, Status.SERVER_ERROR, 'checkSignup')
-                })
-        }
+        let query = {email: req.body.email}
+
+        User.find(query)
+            .then(users => {
+                if (Util.isEmpty(users)) {
+                    if (req.body.password !== req.body.passwordConfirmation) {
+                        Request.errorHandler(res, Status.USER_ERROR, 'Password confirmation is not equal')
+                    } else if (!Util.isPassword(req.body.password)) {
+                        Request.errorHandler(res, Status.USER_ERROR, 'Password must be at least 8 characters')
+                    } else {
+                        bcrypt.hash(req.body.password, Bcrypt.saltRounds)
+                            .then(hash => {
+                                req.body.password = hash
+                                req.body.status = 0
+                                next()
+                            })
+                            .catch(err => {
+                                Request.errorHandler(res, Status.SERVER_ERROR, 'checkSignup')
+                            })
+                    }
+                } else {
+                    Request.errorHandler(res, Status.USER_ERROR, 'Email is already taken')
+                }
+            })
+            .catch(err => {
+                res.status(400).send({error: err.message})
+            })
+
+
     }
 
 }

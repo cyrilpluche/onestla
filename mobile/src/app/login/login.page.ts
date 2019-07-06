@@ -19,7 +19,7 @@ interface Field {
 export class LoginPage implements OnInit {
 
     private loginForm: FormGroup
-    private signInForm: FormGroup
+    private signupForm: FormGroup
     public selectedForm: FormGroup
 
     public loginFields: Field[]
@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
                 private _authenticationCtrl: AuthenticationController,
                 private _router: Router) {
         this.loginForm = this.initLoginForm(formBuilder)
-        this.signInForm = this.initSigninForm(formBuilder)
+        this.signupForm = this.initSigninForm(formBuilder)
     }
 
     ngOnInit() {
@@ -43,6 +43,10 @@ export class LoginPage implements OnInit {
         this.selectedForm = this.loginForm
 
         this.isLogin = true
+    }
+
+    test() {
+        console.log(this.signupForm)
     }
 
     initLoginForm(formBuilder: FormBuilder) {
@@ -85,7 +89,7 @@ export class LoginPage implements OnInit {
 
     selectSigninForm() {
         this.selectedFields = this.signinFields
-        this.selectedForm = this.signInForm
+        this.selectedForm = this.signupForm
         this.isLogin = false
     }
 
@@ -109,11 +113,19 @@ export class LoginPage implements OnInit {
     }
 
     submitSignup() {
-        const user: User = this.signInForm.value
-        this._authenticationCtrl.signup(user)
-            .then(success => {
-                if (success) console.log('Youpi !')
-            })
+        const user: User = this.signupForm.value
+
+        if (user.password !== user.passwordConfirmation) {
+            this.signupForm.controls['passwordConfirmation'].setErrors({ incorrect: true})
+        } else {
+            this._authenticationCtrl.signup(user)
+                .then(success => {
+                    if (success) {
+                        // this.clearSignupForm
+                        this.switchForm()
+                    }
+                })
+        }
     }
 
     submit() {

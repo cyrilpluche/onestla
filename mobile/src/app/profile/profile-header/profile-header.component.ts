@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../../models/user/user.class";
+import {User} from "../../../models/user.class";
 import {ModalController} from '@ionic/angular';
 import {ProfileFormComponent} from "../profile-form/profile-form.component";
 

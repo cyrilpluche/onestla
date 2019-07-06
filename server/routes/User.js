@@ -1,16 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../controllers').User
-const Bcrypt = require('../helpers').Bcrypt
-const Jwt = require('../helpers').Jwt
-
-router.post('/signin', Bcrypt.crypt, User.create);
+const Util = require('../helpers').Util
 
 // router.use(Jwt.verify)
 
 router.get('/find_all', User.findAll);
 router.post('/create', User.create);
 router.put('/updateOne', User.updateOne);
-router.delete('/delete', User.delete);
+router.delete('/delete', Util.isQueryNull, User.delete);
 
 module.exports = router;

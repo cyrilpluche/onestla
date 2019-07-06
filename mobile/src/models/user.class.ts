@@ -5,6 +5,7 @@ export class User {
     firstname: string = 'Benjamin'
     lastname: string = 'Pavard'
     password: string
+    passwordConfirmation: string
     profilePicture: string
     pseudo: string = 'second_poteau'
     userId: number = -1

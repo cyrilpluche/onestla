@@ -40,3 +40,32 @@
   width: 100%;
   --background: none;
 }
+
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+ion-content {
+  --background: #3c3f41
+}
+
+ion-toolbar {
+  --background: #3c3f41;
+}
+
+ion-toolbar p {
+  --color: #FFF;
+}
+
+ion-list {
+  background: transparent !important;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+.t-space {
+  letter-spacing: 2px;
+}

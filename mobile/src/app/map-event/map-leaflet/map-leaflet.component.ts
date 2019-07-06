@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Map, latLng, tileLayer, Layer, marker} from 'leaflet';
-import {Club} from "../../../models/club/club.class";
+import {Club} from "../../../models/club.class";
 import * as L from 'leaflet';
 
 @Component({

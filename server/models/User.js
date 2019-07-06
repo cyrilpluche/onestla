@@ -5,17 +5,20 @@ const userSchema = new Schema({
     firstname: {
         type: String,
         trim: true,
+        lowercase: true,
         required: [true, 'Firstname is required']
     },
     lastname: {
         type: String,
         trim: true,
+        lowercase: true,
         required: [true, 'Lastname is required']
     },
     dateOfBirth: {
         type: Number,
         trim: true,
         min: [1900, 'Date of birth not valid'],
+        max: [2001, 'You must be at least 18 years old'],
         required: [true, 'Date of birth is required']
     },
     status: {
@@ -27,6 +30,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         trim: true,
+        lowercase: true,
         required: [true, 'Email is required']
     },
     password: {

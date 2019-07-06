@@ -6,11 +6,11 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {InputTextComponent} from "./input-text/input-text.component";
+import {PageTitleComponent} from "./page-title/page-title.component";
 
 @NgModule({
     declarations: [
-        InputTextComponent
+        PageTitleComponent
     ],
     imports: [
         IonicModule.forRoot(),
@@ -23,7 +23,7 @@ import {InputTextComponent} from "./input-text/input-text.component";
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     ],
     exports: [
-        InputTextComponent
+        PageTitleComponent
     ]
 })
 export class LibraryModule {

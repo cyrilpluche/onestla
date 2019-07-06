@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {Club} from "../../models/club/club.class";
-import {ClubService} from "../../models/club/club.service";
+import {Club} from "../../models/club.class";
+import {ClubService} from "../../services/club.service";
 import * as _ from 'lodash';
-import {User} from "../../models/user/user.class";
+import {User} from "../../models/user.class";
 
 @Component({
     selector: 'app-map-event',

@@ -1,30 +1,33 @@
 import axios from 'axios';
 import {Injectable} from "@angular/core";
+import {environment} from "../environments/environment";
 
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = environment.baseUrl;
 
 @Injectable({
     providedIn: 'root'
 })
-export class ApiHelper {
+export class Api {
+
+    static config: object = {}
 
     constructor() {
 
     }
 
-    static get (url) {
-        return axios.get(BASE_URL + url).then(res  => res.data)
+    static get (url: string, config: object = this.config) {
+        return axios.get(BASE_URL + url, config).then(res  => res.data)
     }
 
-    static post (url, body) {
+    static post (url: string, body) {
         return axios.post(BASE_URL + url, body)
     }
 
-    static put (url, body) {
+    static put (url: string, body) {
         return axios.put(BASE_URL + url, body)
     }
 
-    static delete (url) {
+    static delete (url: string) {
         return axios.delete(BASE_URL + url)
     }
 }

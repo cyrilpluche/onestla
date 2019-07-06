@@ -4,7 +4,7 @@ import { BottomBarPage } from './bottom-bar.page';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: BottomBarPage,
     children: [
       {

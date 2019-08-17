@@ -121,8 +121,8 @@ export class LoginPage implements OnInit {
             this._authenticationCtrl.signup(user)
                 .then(success => {
                     if (success) {
-                        // this.clearSignupForm
-                        this.switchForm()
+                        this.signupForm.reset()
+                        this.selectLoginForm()
                     }
                 })
         }

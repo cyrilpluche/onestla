@@ -27,4 +27,23 @@ export class UserService {
     sign(user: User): Promise<User> {
         return Api.post('/authentication/signup', user).then(res => new User(res))
     }
+
+    getUser(id: string): Promise<User> {
+        return Api.get('/user/find_all?_id=' + id).then(res => {
+            console.log(res[0])
+            return new User(res[0])
+        })
+    }
+
+    getUsers(): Promise<User[]> {
+        return Api.get('/user/find_all').then(res => {
+            return res as User[]
+        })
+    }
+
+    searchUsers(params: string = ''): Promise<User[]> {
+        return Api.get('/user/search' + params).then(res => {
+            return res as User[]
+        })
+    }
 }

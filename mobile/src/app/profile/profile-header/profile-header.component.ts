@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../models/user.class";
 import {ModalController} from '@ionic/angular';
 import {ProfileFormComponent} from "../profile-form/profile-form.component";
+import {Utility} from "../../../helpers/utility.helper";
 
 @Component({
     selector: 'app-profile-header',
@@ -10,23 +11,20 @@ import {ProfileFormComponent} from "../profile-form/profile-form.component";
 })
 export class ProfileHeaderComponent implements OnInit {
 
-    @Input() user: User = new User()
+    @Input() user: User
 
-    followDetails: { number: Number, label: String }[]
-
-    constructor(public modalController: ModalController) {
+    constructor(public modalController: ModalController,
+                public _util: Utility) {
     }
 
     ngOnInit() {
-        this.followDetails = [
-            {number: this.user.followerSum, label: 'sauces'},
-            {number: this.user.followSum, label: 'idoles'}
-        ]
+        console.log(this.user)
     }
 
     async openProfileForm() {
         const modal = await this.modalController.create({
             component: ProfileFormComponent,
+            cssClass: 'oel-modal',
             componentProps: {
                 user: this.user
             }

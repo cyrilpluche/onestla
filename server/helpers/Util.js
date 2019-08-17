@@ -20,6 +20,7 @@ module.exports = {
     },
 
     isStrNull(object) {
+        console.log(object)
         return object === undefined || object === null || object === ''
     },
 

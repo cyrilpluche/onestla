@@ -8,11 +8,11 @@ const routes: Routes = [
     component: AdminBottomBarPage,
     children: [
       {
-        path: 'profile',
+        path: 'users',
         children: [
           {
             path: '',
-            loadChildren: '../../profile/profile.module#ProfilePageModule'
+            loadChildren: '../user-management/user-management.module#UserManagementPageModule'
           }
         ]
       },
@@ -27,14 +27,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/admin/map',
+        redirectTo: '/admin/users',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/admin/map',
+    redirectTo: '/admin/users',
     pathMatch: 'full'
   }
 ];

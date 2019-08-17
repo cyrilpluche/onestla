@@ -5,7 +5,8 @@ const routes: Routes = [
     {path: '', loadChildren: './login/login.module#LoginPageModule'},
     {path: 'admin', loadChildren: './admin/admin-bottom-bar/admin-bottom-bar.module#AdminBottomBarPageModule'},
     {path: 'login', loadChildren: './login/login.module#LoginPageModule'},
-    {path: 'home', loadChildren: './bottom-bar/bottom-bar.module#BottomBarPageModule'}
+    {path: 'home', loadChildren: './bottom-bar/bottom-bar.module#BottomBarPageModule'},
+  { path: 'search', loadChildren: './search/search.module#SearchPageModule' }
 
 ];
 

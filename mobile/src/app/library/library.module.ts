@@ -7,11 +7,17 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PageTitleComponent} from "./page-title/page-title.component";
+import {UserItemComponent} from "./user-item/user-item.component";
+import {NumberItemComponent} from "./number-item/number-item.component";
+
+const components = [
+    PageTitleComponent,
+    UserItemComponent,
+    NumberItemComponent
+]
 
 @NgModule({
-    declarations: [
-        PageTitleComponent
-    ],
+    declarations: components,
     imports: [
         IonicModule.forRoot(),
         FormsModule,
@@ -22,9 +28,7 @@ import {PageTitleComponent} from "./page-title/page-title.component";
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     ],
-    exports: [
-        PageTitleComponent
-    ]
+    exports: components
 })
 export class LibraryModule {
 }

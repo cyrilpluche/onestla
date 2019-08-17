@@ -6,13 +6,13 @@
         <form class="fill-full-width fill-full-height" [formGroup]="selectedForm" (ngSubmit)="submit()">
             <ion-item class="oel-input" *ngFor="let field of selectedFields">
                 <ion-label color="primary" position="floating">{{ field.label }}</ion-label>
-                <ion-input color="light" [formControlName]="field.name" [type]="field.type" [placeholder]="field.placeholder"></ion-input>
+                <ion-input color="primary" [formControlName]="field.name" [type]="field.type" [placeholder]="field.placeholder"></ion-input>
             </ion-item>
 
             <ion-grid no-padding padding-top>
                 <ion-row justify-content-center>
                     <ion-button color="primary" fill="clear" type="submit" *ngIf="isLogin" [disabled]="!loginForm.valid">Me connecter</ion-button>
-                    <ion-button color="primary" fill="clear" type="submit" *ngIf="!isLogin" [disabled]="!signInForm.valid">M'inscrire</ion-button>
+                    <ion-button color="primary" fill="clear" type="submit" *ngIf="!isLogin" [disabled]="!signupForm.valid">M'inscrire</ion-button>
                 </ion-row>
             </ion-grid>
         </form>

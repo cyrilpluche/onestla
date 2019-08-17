@@ -18,7 +18,9 @@ module.exports = {
         else {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                 if (err || !decoded) res.status(401).send({error: err.message})
-                else next()
+                else {
+                    next()
+                }
             })
         }
 

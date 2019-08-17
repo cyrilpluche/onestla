@@ -13,7 +13,7 @@ module.exports = {
                     .then(success => {
                         if (success) {
                             const payload = {
-                                id: user._id
+                                _id: user[0]._id
                             }
                             const token = Jwt.encode(payload)
                             res.send({token: token})

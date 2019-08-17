@@ -1,23 +1,23 @@
-<ion-grid no-padding>
+<ion-grid no-padding *ngIf="user">
     <ion-row justify-content-between padding>
-        <ion-avatar class="img-fill-space">
-            <ion-img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></ion-img>
-        </ion-avatar>
-        <ion-col size="9" no-padding>
-            <ion-row id="follow-details">
-                <ion-col *ngFor="let detail of followDetails" align-items-stretch>
-                    <ion-row justify-content-center>
-                        <ion-label class="text-bold">{{ detail.number }}</ion-label>
-                    </ion-row>
-                    <ion-row justify-content-center>
-                        <ion-label color="medium" text-capitalize>{{ detail.label }}</ion-label>
-                    </ion-row>
-                </ion-col>
-            </ion-row>
-            <ion-button (click)="openProfileForm()" size="small" fill="outline" expand="block">Modifier le profil</ion-button>
+
+        <ion-col size="3" no-padding text-center>
+            <ion-avatar class="img-fill-space">
+                <ion-img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"></ion-img>
+            </ion-avatar>
         </ion-col>
+
+        <ion-col size="9" no-padding>
+            <oel-number-item [number]="user.friendsSum" [label]="'sauces'"></oel-number-item>
+
+            <!--<ion-row id="follow-details" class="fill-full-height" justify-content-center align-items-center>
+                <oel-number-item [number]="user.friendsSum" [label]="'sauces'"></oel-number-item>
+                <ion-button (click)="openProfileForm()" size="small" fill="outline" expand="block">Modifier le profil</ion-button>
+            </ion-row>-->
+        </ion-col>
+
     </ion-row>
     <ion-row padding>
-        {{ '@' + user.pseudo }}
+        <ion-label color="primary">{{ _util.capitalize([user.firstname, user.lastname]) }}</ion-label>
     </ion-row>
 </ion-grid>

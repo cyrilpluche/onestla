@@ -6,13 +6,15 @@ import {FormsModule} from '@angular/forms';
 import {ProfilePage} from './profile.page';
 import {StatsComponent} from "./stats/stats.component";
 import {ProfileHeaderComponent} from "./profile-header/profile-header.component";
+import {LibraryModule} from "../library/library.module";
 
 @NgModule({
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([{path: '', component: ProfilePage}])
+        RouterModule.forChild([{path: '', component: ProfilePage}]),
+        LibraryModule
     ],
     declarations: [
         ProfilePage,

@@ -16,7 +16,10 @@ module.exports = {
                                 _id: user[0]._id
                             }
                             const token = Jwt.encode(payload)
-                            res.send({token: token})
+                            res.send({
+                                token: token,
+                                id: user[0]._id
+                            })
                         }
                         else res.status(401).send('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected')
                     })

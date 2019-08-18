@@ -11,6 +11,8 @@ import {AppComponent} from './app.component';
 import {ProfileFormComponent} from "./profile/profile-form/profile-form.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LibraryModule} from "./library/library.module";
+import {reducers} from "../store/reducers";
+import { StoreModule } from '@ngrx/store'
 
 @NgModule({
     declarations: [
@@ -23,6 +25,7 @@ import {LibraryModule} from "./library/library.module";
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
+        StoreModule.forRoot(reducers),
         AppRoutingModule,
         FormsModule
     ],

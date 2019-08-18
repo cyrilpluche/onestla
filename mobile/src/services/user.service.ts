@@ -11,7 +11,7 @@ export class UserService {
 
     }
 
-    log(username: string, password: string): Promise<{token: string}> {
+    log(username: string, password: string): Promise<{token: string, id: string}> {
         let basicAuth = 'Basic ' + btoa(username + ':' + password);
 
         let config = {

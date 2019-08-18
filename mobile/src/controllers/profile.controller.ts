@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {User} from "../models/user.class";
+import {FriendService} from "../services/friend.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileController {
 
-    constructor(private _userService: UserService) {
+    constructor(private _userService: UserService,
+                private _friendService: FriendService) {
 
     }
 
@@ -23,4 +25,15 @@ export class ProfileController {
             .then(() => user)
     }
 
+    askFriend(friendId: string): Promise<boolean> {
+        let success = true
+        return this._friendService.askFriend(friendId)
+            .then(res => {
+                // nothing
+            })
+            .catch(err => {
+                success = false
+            })
+            .then(() => success)
+    }
 }

@@ -5,11 +5,11 @@ const frequentSchema = new Schema(
     {
         idAsker: {
             type: String,
-            required: [true, 'idAsker is requried']
+            required: [true, 'idAsker is required']
         },
         idReceiver: {
             type: String,
-            required: [true, 'idReceiver is requried']
+            required: [true, 'idReceiver is required']
         },
         state: {
             type: String,

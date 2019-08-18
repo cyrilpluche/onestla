@@ -44,7 +44,7 @@ export class BottomBarPage implements OnInit {
     }
 
     test() {
-        console.log(this.tabs)
+        // console.log(this.tabs)
     }
 
 }

@@ -1,17 +1,23 @@
 const User = require('../models').User
+const Friend = require('../models').Friend
 const Util = require('../helpers').Util
 const Bcrypt = require('../helpers').Bcrypt
 const Request = require('../helpers').Request
 const Jwt = require('../helpers').Jwt
-const Status = require('../enums').Status
+const Status = require('../enums').RES_STATUS
 const bcrypt = require('bcrypt');
-const authorization = require('../enums').Authorization
+const Authorization = require('../enums').PROFILE_AUTHORIZATION
+const UserStatus = require('../enums').USER_STATUS
+const FRIEND_STATE = require('../enums').FRIEND_STATE
 
 // helpers
 
-const getAuthorization = (user1, user2) => {
-    if (user1.toString() === user2.toString()) return authorization.UPDATE
-    else return authorization.READONLY
+const getAuthorization = (user1, user2, state) => {
+    if (!user1 || !user2) return Authorization.READONLY
+    else if (user1.toString() === user2.toString()) return Authorization.UPDATE
+    else if (parseInt(state) === FRIEND_STATE.PENDING) return Authorization.PENDING
+    else if (parseInt(state) === FRIEND_STATE.SUCCESS) return Authorization.FRIEND
+    else return Authorization.READONLY
 }
 
 module.exports = {
@@ -39,9 +45,29 @@ module.exports = {
         User.find(req.query)
             .select("-password")
             .then(users => {
-                console.log(req.query)
-                let user = Object.assign({authorization: getAuthorization(token._id, users[0]._id)}, users[0]._doc)
-                res.send(user)
+                let authorization = Authorization.READONLY
+                let user = Object.assign({authorization: authorization}, users[0]._doc)
+
+                if (token !== undefined && token !== null) {
+                    user.authorization = getAuthorization(token._id, users[0]._id, null)
+
+                    if (authorization !== Authorization.UPDATE) {
+                        Friend.find({idAsker: token._id, idReceiver: users[0]._id})
+                            .then(friend => {
+                                if (friend[0] !== undefined && friend[0] !== null) {
+                                    user.authorization = getAuthorization(token._id, users[0]._id, friend[0].state)
+                                    console.log(getAuthorization(token._id, users[0]._id, friend[0].state))
+                                    console.log(user.authorization)
+                                }
+                                res.send(user)
+                            })
+                    } else {
+                        res.send(user)
+                    }
+
+                } else {
+                    res.send(user)
+                }
             })
             .catch(err => {
                 res.status(400).send({error: err.message})
@@ -93,7 +119,7 @@ module.exports = {
     },
 
     findToken(req, res, next) {
-        const token = Jwt.decode(req.headers['authorization'])
+        const token = Jwt.decode(req.headers['Authorization'])
         const query = {_id: token._id}
         User.find(query)
             .select("-password")
@@ -135,7 +161,7 @@ module.exports = {
                         bcrypt.hash(req.body.password, Bcrypt.saltRounds)
                             .then(hash => {
                                 req.body.password = hash
-                                req.body.status = 0
+                                req.body.status = UserStatus.CREATED
                                 next()
                             })
                             .catch(err => {

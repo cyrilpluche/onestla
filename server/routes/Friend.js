@@ -8,5 +8,6 @@ const Jwt = require('../helpers').Jwt
 
 router.get('/find_all', Friend.findAll);
 router.post('/create', Friend.create);
+router.put('/updateOne', Friend.updateOne);
 
 module.exports = router;

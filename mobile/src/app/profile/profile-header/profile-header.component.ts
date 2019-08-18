@@ -4,6 +4,7 @@ import {ModalController} from '@ionic/angular';
 import {ProfileFormComponent} from "../profile-form/profile-form.component";
 import {Utility} from "../../../helpers/utility.helper";
 import {AuthorizationEnum} from "../../../enums";
+import {ProfileController} from "../../../controllers/profile.controller";
 
 @Component({
     selector: 'app-profile-header',
@@ -18,6 +19,7 @@ export class ProfileHeaderComponent implements OnInit {
     buttonAction: any
 
     constructor(public modalController: ModalController,
+                private _profileController: ProfileController,
                 public _util: Utility) {
     }
 
@@ -32,6 +34,7 @@ export class ProfileHeaderComponent implements OnInit {
     }
 
     initActions() {
+        console.log('auth : ', this.user.authorization)
         switch(this.user.authorization) {
             case AuthorizationEnum.UPDATE:
                 this.buttonLabel = 'Modifier Profil'
@@ -41,14 +44,31 @@ export class ProfileHeaderComponent implements OnInit {
                 this.buttonLabel = 'Devenir Pote'
                 this.buttonAction = this.askFriend
                 break
-
+            case AuthorizationEnum.PENDING:
+                this.buttonLabel = 'Suspense'
+                this.buttonAction = this.destroyFriend
+                break
+            case AuthorizationEnum.FRIEND:
+                this.buttonLabel = 'My Men'
+                this.buttonAction = this.destroyFriend
+                break
             default:
-                console.log('nothing')
+                // nothing
         }
     }
 
     askFriend() {
-        console.log('become friend')
+        this._profileController.askFriend(this.user._id)
+            .then(success => {
+                if (success) {
+                    this.user.authorization = AuthorizationEnum.PENDING
+                    this.initActions()
+                }
+            })
+    }
+
+    destroyFriend() {
+        console.log('destroy')
     }
 
     async openProfileForm() {

@@ -1,3 +1,5 @@
+import {AuthorizationEnum} from "../enums";
+
 export class User {
 
     _id: string
@@ -10,6 +12,7 @@ export class User {
     profilePicture: string
     status: number
     friendsSum: number = 0
+    authorization: AuthorizationEnum
 
     eventTotalRate: number = 0
     eventWeekRate: number = 0

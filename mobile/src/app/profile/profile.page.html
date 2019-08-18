@@ -7,6 +7,6 @@
 </ion-header>
 
 <ion-content>
-    <app-profile-header [user]="user"></app-profile-header>
+    <app-profile-header *ngIf="user" [user]="user"></app-profile-header>
     <!--<app-stats></app-stats>-->
 </ion-content>

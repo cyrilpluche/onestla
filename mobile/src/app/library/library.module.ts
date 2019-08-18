@@ -9,11 +9,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PageTitleComponent} from "./page-title/page-title.component";
 import {UserItemComponent} from "./user-item/user-item.component";
 import {NumberItemComponent} from "./number-item/number-item.component";
+import {ButtonComponent} from "./button/button.component";
 
 const components = [
     PageTitleComponent,
     UserItemComponent,
-    NumberItemComponent
+    NumberItemComponent,
+    ButtonComponent
 ]
 
 @NgModule({

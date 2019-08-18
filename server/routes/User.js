@@ -4,9 +4,10 @@ const User = require('../controllers').User
 const Util = require('../helpers').Util
 const Jwt  = require('../helpers').Jwt
 
-// router.use(Jwt.verify)
+router.use(Jwt.verify)
 
 router.get('/find_all', User.findAll);
+router.get('/profile', User.findProfile);
 router.get('/search', User.search);
 router.post('/create', User.create);
 router.put('/updateOne', User.updateOne);

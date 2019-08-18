@@ -5,6 +5,14 @@ const Request = require('../helpers').Request
 const Jwt = require('../helpers').Jwt
 const Status = require('../enums').Status
 const bcrypt = require('bcrypt');
+const authorization = require('../enums').Authorization
+
+// helpers
+
+const getAuthorization = (user1, user2) => {
+    if (user1.toString() === user2.toString()) return authorization.UPDATE
+    else return authorization.READONLY
+}
 
 module.exports = {
     create(req, res, next) {
@@ -21,6 +29,20 @@ module.exports = {
         User.find(req.query)
             .select("-password")
             .then(users => res.send(users))
+            .catch(err => {
+                res.status(400).send({error: err.message})
+            })
+    },
+
+    findProfile(req, res, next) {
+        const token = Jwt.decode(req.headers['authorization'])
+        User.find(req.query)
+            .select("-password")
+            .then(users => {
+                console.log(req.query)
+                let user = Object.assign({authorization: getAuthorization(token._id, users[0]._id)}, users[0]._doc)
+                res.send(user)
+            })
             .catch(err => {
                 res.status(400).send({error: err.message})
             })
@@ -59,7 +81,6 @@ module.exports = {
             User.find(query)
                 .select("-password")
                 .then(users => {
-                    console.log(users)
                     res.send(users)
                 })
                 .catch(err => {

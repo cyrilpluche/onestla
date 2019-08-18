@@ -1,8 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../models/user.class";
 import {ProfileController} from "../../controllers/profile.controller";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Utility} from "../../helpers/utility.helper";
+import {Store} from "@ngrx/store";
+import {State} from "../../store/store";
+import * as fromStore from "../../store/store";
+import {Observable} from "rxjs";
+import {UserState} from "../../store/reducers/user.reducer";
+import {ProfileHeaderComponent} from "./profile-header/profile-header.component";
 
 @Component({
     selector: 'app-profile',
@@ -11,14 +17,26 @@ import {Utility} from "../../helpers/utility.helper";
 })
 export class ProfilePage implements OnInit {
 
+    private id$$: string
+
     title: string = 'Profile'
     user: User
+    mode: 'update' | 'readonly' | 'friend' = 'readonly'
 
     constructor(private _profileCtrl: ProfileController,
+                private _store: Store<State>,
                 private _util: Utility,
-                private _route: ActivatedRoute) {}
+                private _router: Router,
+                private _route: ActivatedRoute) {
+        _store.select(fromStore.getUser).subscribe(value => {
+            this.id$$ = value.id
+        })
+    }
 
     ngOnInit() {
+    }
+
+    ionViewWillEnter() {
         this.initUser()
     }
 
@@ -26,10 +44,13 @@ export class ProfilePage implements OnInit {
         const id = this._route.snapshot.paramMap.get('id')
 
         if (!this._util.isStrEmpty(id)) {
-            this._profileCtrl.getUser(id)
+            this._profileCtrl.getProfile(id)
                 .then(user => {
-                    this.user = user
+                    if (user) this.user = user
+                    else this._router.navigate(['home/search'])
                 })
+        } else {
+            this._router.navigate(['home/search'])
         }
     }
 

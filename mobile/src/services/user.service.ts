@@ -20,7 +20,7 @@ export class UserService {
 
         return Api.get('/authentication/login', config)
             .then(res => {
-                return res as {token: string}
+                return res as {token: string, id: string}
             })
     }
 
@@ -28,10 +28,10 @@ export class UserService {
         return Api.post('/authentication/signup', user).then(res => new User(res))
     }
 
-    getUser(id: string): Promise<User> {
-        return Api.get('/user/find_all?_id=' + id).then(res => {
-            console.log(res[0])
-            return new User(res[0])
+    getProfile(id: string): Promise<User> {
+        return Api.get('/user/profile?_id=' + id).then(res => {
+            console.log(res)
+            return new User(res)
         })
     }
 

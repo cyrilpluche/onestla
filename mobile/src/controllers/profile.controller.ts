@@ -11,9 +11,9 @@ export class ProfileController {
 
     }
 
-    getUser(id: string): Promise<User> {
+    getProfile(id: string): Promise<User> {
         let user: User = null
-        return this._userService.getUser(id)
+        return this._userService.getProfile(id)
             .then(res => {
                 user = res
             })

@@ -3,13 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationController} from "../../controllers/authentication.controller";
 import {Router} from "@angular/router";
 import {User} from "../../models/user.class";
-
-interface Field {
-    label: string
-    type: string
-    name: string
-    placeholder: string
-}
+import {Field, fields, forms} from "../forms/login.form";
+import {Utility} from "../../helpers/utility.helper";
 
 @Component({
     selector: 'app-login',
@@ -30,15 +25,16 @@ export class LoginPage implements OnInit {
     public logoUrl: string = '../../assets/images/logo.png'
 
     constructor(private formBuilder: FormBuilder,
+                private _util: Utility,
                 private _authenticationCtrl: AuthenticationController,
                 private _router: Router) {
-        this.loginForm = this.initLoginForm(formBuilder)
-        this.signupForm = this.initSigninForm(formBuilder)
+        this.loginForm = formBuilder.group(forms.login)
+        this.signupForm = formBuilder.group(forms.signin)
     }
 
     ngOnInit() {
-        this.loginFields = this.initLoginFields()
-        this.signinFields = this.initSigninFields()
+        this.loginFields = fields.login
+        this.signinFields = fields.signin
         this.selectedFields = this.loginFields
         this.selectedForm = this.loginForm
 
@@ -47,44 +43,6 @@ export class LoginPage implements OnInit {
 
     test() {
         console.log(this.signupForm)
-    }
-
-    initLoginForm(formBuilder: FormBuilder) {
-        return formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
-        });
-    }
-
-    initSigninForm(formBuilder: FormBuilder) {
-        return formBuilder.group({
-            pseudo: ['', Validators.required],
-            email: ['', Validators.required],
-            firstname: ['', Validators.required],
-            lastname: ['', Validators.required],
-            dateOfBirth: ['', Validators.required],
-            password: ['', Validators.required],
-            passwordConfirmation: ['', Validators.required]
-        });
-    }
-
-    initLoginFields(): Field[] {
-        return [
-            { label: 'Login', name: 'username', type: 'text', placeholder: 'mugiwara@gum.fr' },
-            { label: 'Mot de passe', name: 'password', type: 'password', placeholder: 'mot de passe' }
-        ]
-    }
-
-    initSigninFields(): Field[] {
-        return [
-            { label: 'Pseudo', name: 'pseudo', type: 'text', placeholder: 'gros-choco50' },
-            { label: 'Email', name: 'email', type: 'text', placeholder: 'roronoa@sword.fr' },
-            { label: 'Prénom', name: 'firstname', type: 'text', placeholder: 'Zoro' },
-            { label: 'Nom', name: 'lastname', type: 'text', placeholder: 'Roronoa' },
-            { label: 'Date de naissance', name: 'dateOfBirth', type: 'number', placeholder: '1990' },
-            { label: 'Mot de passe', name: 'password', type: 'password', placeholder: '' },
-            { label: 'Confirmation', name: 'passwordConfirmation', type: 'password', placeholder: '' }
-        ]
     }
 
     selectSigninForm() {
@@ -119,8 +77,8 @@ export class LoginPage implements OnInit {
             this.signupForm.controls['passwordConfirmation'].setErrors({ incorrect: true})
         } else {
             this._authenticationCtrl.signup(user)
-                .then(success => {
-                    if (success) {
+                .then(createdUser => {
+                    if (!this._util.isNull(createdUser)) {
                         this.signupForm.reset()
                         this.selectLoginForm()
                     }

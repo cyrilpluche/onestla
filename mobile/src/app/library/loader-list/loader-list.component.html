@@ -1,0 +1,9 @@
+<ion-item class="fill-full-width loader-container" text-center>
+    <ion-label *ngIf="!loading">{{message}}</ion-label>
+
+    <ion-grid no-padding *ngIf="loading">
+        <ion-row justify-content-center>
+            <ion-spinner name="crescent"></ion-spinner>
+        </ion-row>
+    </ion-grid>
+</ion-item>

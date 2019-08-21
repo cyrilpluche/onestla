@@ -30,16 +30,16 @@ export class AuthenticationController {
             .then(() => success)
     }
 
-    signup(user: User): Promise<boolean> {
-        let success = false
+    signup(user: User): Promise<User> {
+        let createdUser = null
         return this._userService.sign(user)
             .then(res => {
-                success = true
+                createdUser = res
             })
             .catch(err => {
                 console.log(err)
             })
-            .then(() => success)
+            .then(() => createdUser)
     }
 
     logged(): Promise<boolean> {

@@ -9,9 +9,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {UserListComponent} from "./user-list/user-list.component";
 import {LibraryModule} from "../library/library.module";
+import {SignupFormComponent} from "./signup-form/signup-form.component";
 
 const components = [
-    UserListComponent
+    UserListComponent,
+    SignupFormComponent
 ]
 
 @NgModule({
@@ -24,7 +26,7 @@ const components = [
         LibraryModule
     ],
     entryComponents: [
-        UserListComponent
+        components
     ],
     providers: [
         StatusBar,

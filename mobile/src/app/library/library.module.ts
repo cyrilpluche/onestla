@@ -11,12 +11,14 @@ import {UserItemComponent} from "./user-item/user-item.component";
 import {NumberItemComponent} from "./number-item/number-item.component";
 import {ButtonComponent} from "./button/button.component";
 import {CommonModule} from "@angular/common";
+import {LoaderListComponent} from "./loader-list/loader-list.component";
 
 const components = [
     PageTitleComponent,
     UserItemComponent,
     NumberItemComponent,
-    ButtonComponent
+    ButtonComponent,
+    LoaderListComponent
 ]
 
 @NgModule({

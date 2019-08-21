@@ -32,7 +32,7 @@ export class UserService {
     }
 
     sign(user: User): Promise<User> {
-        return Api.post('/authentication/signup', user).then(res => new User(res))
+        return Api.post('/authentication/signup', user).then(res => new User(res.data))
     }
 
     getProfile(id: string): Promise<User> {

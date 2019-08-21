@@ -1,19 +1,24 @@
-<ion-header>
+<ion-header no-border>
     <ion-toolbar>
         <ion-buttons slot="primary">
             <ion-button (click)="saveChanges()">
                 <ion-icon slot="icon-only" name="save"></ion-icon>
+            </ion-button>
+            <ion-button (click)="openSignupForm()">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-title>
             {{ title }}
         </ion-title>
     </ion-toolbar>
+    <ion-toolbar>
+        <oel-loader-list *ngIf="users" [loading]="loading" [message]="users.length + ' résultats'"></oel-loader-list>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-list>
-
         <ion-item-sliding *ngFor="let user of users">
             <ion-item-options side="start">
                 <ion-item-option>

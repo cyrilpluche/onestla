@@ -2,12 +2,7 @@
     <ion-toolbar>
         <ion-searchbar debounce="500" (ionInput)="load()" (ionChange)="search($event)"></ion-searchbar>
     </ion-toolbar>
-    <ion-grid>
-        <ion-row class="loader-container" justify-content-center>
-            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-            <ion-label *ngIf="!loading && users">{{users.length + ' résultats'}}</ion-label>
-        </ion-row>
-    </ion-grid>
+   <oel-loader-list *ngIf="users" [loading]="loading" [message]="users.length + ' résultats'"></oel-loader-list>
 </ion-header>
 
 <ion-content id="search">

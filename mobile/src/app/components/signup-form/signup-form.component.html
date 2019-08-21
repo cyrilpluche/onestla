@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="secondary">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Ajouter une sauce
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form class="fill-full-width" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <ion-item class="oel-input" *ngFor="let field of signupFields">
+            <ion-label color="primary" position="floating">{{ field.label }}</ion-label>
+            <ion-input color="primary" [formControlName]="field.name" [type]="field.type"
+                       [placeholder]="field.placeholder"></ion-input>
+        </ion-item>
+    </form>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons>
+                <ion-button (click)="onSubmit()" color="primary" fill="clear" type="submit" [disabled]="!signupForm.valid">Soumettre
+                </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

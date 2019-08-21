@@ -1,7 +1,3 @@
-const Status = require('./StatusCode');
-const User = require('./User');
-const Authorization = require('./Authorization');
-
 const RES_STATUS = {
     USER_ERROR: 400,
     UNAUTHORIZED: 401,
@@ -14,7 +10,8 @@ const PROFILE_AUTHORIZATION = {
     READONLY: 0,
     UPDATE: 1,
     PENDING: 2,
-    FRIEND: 3
+    WAITING: 3,
+    FRIEND: 4
 }
 
 const USER_STATUS = {

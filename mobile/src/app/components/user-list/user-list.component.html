@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="secondary">
+            <ion-button (click)="dismiss()">
+                <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Sauces Deluxes
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-list class="fill-full-height">
+    <oel-user-item (evClick)="onClick($event)" *ngFor="let user of users" [user]="user"></oel-user-item>
+</ion-list>

@@ -1,13 +1,17 @@
 <ion-header no-border>
     <ion-toolbar>
-        <ion-searchbar debounce="500" (ionChange)="search($event)"></ion-searchbar>
+        <ion-searchbar debounce="500" (ionInput)="load()" (ionChange)="search($event)"></ion-searchbar>
     </ion-toolbar>
+    <ion-grid>
+        <ion-row class="loader-container" justify-content-center>
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <ion-label *ngIf="!loading && users">{{users.length + ' résultats'}}</ion-label>
+        </ion-row>
+    </ion-grid>
 </ion-header>
 
 <ion-content id="search">
-
     <ion-list>
         <oel-user-item *ngFor="let user of users" [user]="user" (evClick)="openProfile($event)"></oel-user-item>
     </ion-list>
-
 </ion-content>

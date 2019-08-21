@@ -15,6 +15,8 @@ export class MapEventPage {
     clubSelected: Club = null
     friendList: User[] = []
 
+    showDetail: boolean = true
+
     ionViewWillEnter() {
         ClubService.getClubs().then(clubs => {
             for (let club of clubs ) {
@@ -27,6 +29,11 @@ export class MapEventPage {
 
     retrieveClub(pos: {lat: number, lng: number}) {
         this.clubSelected = _.find(this.clubs, pos)
+    }
+
+    // === V2
+    handleShowDetail(value: boolean) {
+        this.showDetail = value
     }
 
 }

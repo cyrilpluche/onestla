@@ -7,6 +7,7 @@ import {ProfilePage} from './profile.page';
 import {StatsComponent} from "./stats/stats.component";
 import {ProfileHeaderComponent} from "./profile-header/profile-header.component";
 import {LibraryModule} from "../library/library.module";
+import {ComponentsModule} from "../components/components.module";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import {LibraryModule} from "../library/library.module";
         CommonModule,
         FormsModule,
         RouterModule.forChild([{path: '', component: ProfilePage}]),
-        LibraryModule
+        LibraryModule,
+        ComponentsModule
     ],
     declarations: [
         ProfilePage,

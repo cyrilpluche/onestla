@@ -9,6 +9,7 @@ import * as fromStore from "../../store/store";
 import {Observable} from "rxjs";
 import {UserState} from "../../store/reducers/user.reducer";
 import {ProfileHeaderComponent} from "./profile-header/profile-header.component";
+import {AuthorizationEnum} from "../../enums";
 
 @Component({
     selector: 'app-profile',
@@ -21,7 +22,7 @@ export class ProfilePage implements OnInit {
 
     title: string = 'Profile'
     user: User
-    mode: 'update' | 'readonly' | 'friend' = 'readonly'
+    notifications: User[] = []
 
     constructor(private _profileCtrl: ProfileController,
                 private _store: Store<State>,
@@ -46,12 +47,32 @@ export class ProfilePage implements OnInit {
         if (!this._util.isStrEmpty(id)) {
             this._profileCtrl.getProfile(id)
                 .then(user => {
-                    if (user) this.user = user
+                    if (user) {
+                        this.user = user
+                        this.fetchNotifications(this.user)
+                    }
                     else this._router.navigate(['home/search'])
                 })
         } else {
             this._router.navigate(['home/search'])
         }
+    }
+
+    fetchNotifications(user: User) {
+        switch(user.authorization) {
+            case AuthorizationEnum.UPDATE:
+                this.getNotifications()
+                break
+            default:
+            // nothing
+        }
+    }
+
+    getNotifications() {
+        this._profileCtrl.getPending()
+            .then(users => {
+                this.notifications = users
+            })
     }
 
 }

@@ -25,9 +25,57 @@ export class ProfileController {
             .then(() => user)
     }
 
+    getPending(): Promise<User[]> {
+        let users: User[] = []
+        return this._friendService.getPending()
+            .then(res => {
+                users = res
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .then(() => users)
+    }
+
+    getFriends(): Promise<User[]> {
+        let users: User[] = []
+        return this._friendService.getFriends()
+            .then(res => {
+                users = res
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .then(() => users)
+    }
+
     askFriend(friendId: string): Promise<boolean> {
         let success = true
         return this._friendService.askFriend(friendId)
+            .then(res => {
+                // nothing
+            })
+            .catch(err => {
+                success = false
+            })
+            .then(() => success)
+    }
+
+    acceptFriend(friendId: string): Promise<boolean> {
+        let success = true
+        return this._friendService.accept(friendId)
+            .then(res => {
+                // nothing
+            })
+            .catch(err => {
+                success = false
+            })
+            .then(() => success)
+    }
+
+    removeFriend(friendId: string): Promise<boolean> {
+        let success = true
+        return this._friendService.removeFriend(friendId)
             .then(res => {
                 // nothing
             })

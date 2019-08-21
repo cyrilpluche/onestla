@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class SearchPage implements OnInit {
 
     users: User[]
+    loading: boolean = false
 
     constructor(private _userManagementCtrl: UserManagementController,
                 private _router: Router) {
@@ -20,15 +21,21 @@ export class SearchPage implements OnInit {
     ngOnInit() {
     }
 
+    load() {
+        this.loading = true
+    }
+
     search(event) {
         let value = (event.detail.value)
         if (value !== '') {
             this._userManagementCtrl.searchUsers(value)
                 .then(users => {
                     this.users = users
+                    this.loading = false
                 })
         } else {
             this.users = []
+            this.loading = false
         }
     }
 

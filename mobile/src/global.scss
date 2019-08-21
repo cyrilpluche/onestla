@@ -44,7 +44,7 @@ $bg-color: white;
 // ===== V2 =====
 .oel-input {
   width: 100%;
-  --background: none;
+  --background: white;
   --padding-start: 10px;
   --padding-end: 10px;
 }
@@ -79,7 +79,7 @@ ion-item {
 }
 
 .oel-modal {
-  --background: #3c3f41;
+  --background: white;
 }
 
 ion-title {

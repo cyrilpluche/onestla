@@ -41,4 +41,19 @@ export class AuthenticationController {
             })
             .then(() => success)
     }
+
+    logged(): Promise<boolean> {
+        let success = false
+        return this._userService.logged()
+            .then(res => {
+                success = true
+                localStorage.setItem('token', res.token)
+                new UserAction(this._store, UserTypes.USERCHANGE, res.id).dispatch()
+            })
+            .catch(err => {
+                localStorage.removeItem('token')
+                // console.log(err)
+            })
+            .then(() => success)
+    }
 }

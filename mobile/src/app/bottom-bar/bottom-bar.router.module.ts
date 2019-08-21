@@ -8,6 +8,15 @@ const routes: Routes = [
         component: BottomBarPage,
         children: [
             {
+                path: 'profile',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../profile/profile.module#ProfilePageModule'
+                    }
+                ]
+            },
+            {
                 path: 'profile/:id',
                 children: [
                     {

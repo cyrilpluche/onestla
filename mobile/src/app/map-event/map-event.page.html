@@ -1,11 +1,27 @@
 <ion-header>
     <ion-toolbar>
         <oel-page-title [text]="'Night\'s Map'"></oel-page-title>
+        <ion-buttons slot="primary">
+            <ion-button>
+                <ion-icon slot="icon-only" name="calendar"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="fill-full-height container">
-    <app-map-leaflet *ngIf="clubs" [clubs]="clubs" (onClubSelected)="retrieveClub($event)"></app-map-leaflet>
+<ion-content>
+    <div class="map-container">
+        <div (click)="handleShowDetail(false)" class="leaflet-map-container">
+            <div class="map-absolute-container">
+                <app-map-leaflet *ngIf="clubs" [clubs]="clubs" (onClubSelected)="retrieveClub($event)"></app-map-leaflet>
+            </div>
+        </div>
+        <div [ngClass]="{'detail-map-container': true, 'detail-map-hide': !showDetail}"></div>
+    </div>
+</ion-content>
+
+<!--
+<app-map-leaflet *ngIf="clubs" [clubs]="clubs" (onClubSelected)="retrieveClub($event)"></app-map-leaflet>
 
     <ion-slides id="map-detail" pager="true">
 
@@ -46,4 +62,4 @@
 
     </ion-slides>
 
-</ion-content>
+-->

@@ -1,5 +1,10 @@
 <ion-header>
     <ion-toolbar>
+        <ion-buttons slot="primary">
+            <ion-button (click)="saveChanges()">
+                <ion-icon slot="icon-only" name="save"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title>
             {{ title }}
         </ion-title>
@@ -17,12 +22,19 @@
                 <ion-item-option color="danger">Share</ion-item-option>
             </ion-item-options>
 
-            <ion-item>
-                <ion-label color="primary" text-wrap>{{ user.email }}</ion-label>
-                <ion-label color="primary" text-end>{{ user.status }}</ion-label>
+            <ion-item class="oel-input">
+                <ion-label color="primary" position="stacked">{{capitalize([user.firstname, user.lastname])}}</ion-label>
+                <ion-input placeholder="Email" type="email" [(ngModel)]="user.email"></ion-input>
+                <ion-select placeholder="Status" [(ngModel)]="user.status">
+                    <ion-select-option [value]="userStatus.VERIFIED">Verified</ion-select-option>
+                    <ion-select-option [value]="userStatus.CREATED">Created</ion-select-option>
+                    <ion-select-option [value]="userStatus.DISABLED">Disabled</ion-select-option>
+                    <ion-select-option [value]="userStatus.ADMIN">Admin</ion-select-option>
+                </ion-select>
             </ion-item>
-
         </ion-item-sliding>
+
+
 
     </ion-list>
 </ion-content>

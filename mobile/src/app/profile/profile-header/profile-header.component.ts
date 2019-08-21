@@ -5,6 +5,7 @@ import {ProfileFormComponent} from "../profile-form/profile-form.component";
 import {Utility} from "../../../helpers/utility.helper";
 import {AuthorizationEnum} from "../../../enums";
 import {ProfileController} from "../../../controllers/profile.controller";
+import {UserListComponent} from "../../components/user-list/user-list.component";
 
 @Component({
     selector: 'app-profile-header',
@@ -14,12 +15,13 @@ import {ProfileController} from "../../../controllers/profile.controller";
 export class ProfileHeaderComponent implements OnInit {
 
     @Input() user: User
+    @Input() notifications: User[] = []
 
     buttonLabel: string
     buttonAction: any
 
     constructor(public modalController: ModalController,
-                private _profileController: ProfileController,
+                public _profileController: ProfileController,
                 public _util: Utility) {
     }
 
@@ -28,13 +30,10 @@ export class ProfileHeaderComponent implements OnInit {
     }
 
     test() {
-        console.log(this.user)
-        console.log(this.buttonLabel)
-        console.log(this.buttonAction)
+        console.log(this.notifications)
     }
 
     initActions() {
-        console.log('auth : ', this.user.authorization)
         switch(this.user.authorization) {
             case AuthorizationEnum.UPDATE:
                 this.buttonLabel = 'Modifier Profil'
@@ -46,15 +45,39 @@ export class ProfileHeaderComponent implements OnInit {
                 break
             case AuthorizationEnum.PENDING:
                 this.buttonLabel = 'Suspense'
-                this.buttonAction = this.destroyFriend
+                this.buttonAction = this.cancelFriend
+                break
+            case AuthorizationEnum.WAITING:
+                this.buttonLabel = 'Waiting'
+                this.buttonAction = this.cancelFriend
                 break
             case AuthorizationEnum.FRIEND:
                 this.buttonLabel = 'My Men'
-                this.buttonAction = this.destroyFriend
+                this.buttonAction = this.removeFriend
                 break
             default:
                 // nothing
         }
+    }
+
+    becomeFriend(friend: User) {
+        this._profileController.acceptFriend(friend._id)
+            .then(success => {
+                this.removeNotification(friend)
+                this.user.friendsSum += 1
+            })
+    }
+
+    refuseFriend(friend: User) {
+        this._profileController.removeFriend(friend._id)
+            .then(success => {
+                this.removeNotification(friend)
+            })
+    }
+
+    removeNotification(friend: User) {
+        this.notifications = this._util.removeFromArray(this.notifications, friend)
+        console.log(this.notifications)
     }
 
     askFriend() {
@@ -67,8 +90,25 @@ export class ProfileHeaderComponent implements OnInit {
             })
     }
 
-    destroyFriend() {
-        console.log('destroy')
+    removeFriend() {
+        this._profileController.removeFriend(this.user._id)
+            .then(success => {
+                if (success) {
+                    this.user.authorization = AuthorizationEnum.READONLY
+                    this.user.friendsSum -= 1
+                    this.initActions()
+                }
+            })
+    }
+
+    cancelFriend() {
+        this._profileController.removeFriend(this.user._id)
+            .then(success => {
+                if (success) {
+                    this.user.authorization = AuthorizationEnum.READONLY
+                    this.initActions()
+                }
+            })
     }
 
     async openProfileForm() {
@@ -76,10 +116,23 @@ export class ProfileHeaderComponent implements OnInit {
             component: ProfileFormComponent,
             cssClass: 'oel-modal',
             componentProps: {
-                user: this.user
+                users: this.user
             }
         });
         return await modal.present();
     }
+
+    async openUserList() {
+        const modal = await this.modalController.create({
+            component: UserListComponent,
+            cssClass: 'oel-modal',
+            componentProps: {
+                user: this.user,
+                init: this._profileController.getFriends
+            }
+        });
+        return await modal.present();
+    }
+
 
 }

@@ -1,7 +1,38 @@
+.map-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.leaflet-map-container {
+  position: relative;
+  flex-grow: 1;
+}
+
+.map-absolute-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.detail-map-container {
+  flex-grow: 1;
+  background-color: red;
+  transition: flex-grow 2s ease;
+}
+
+.detail-map-hide {
+  flex-grow: 0 !important;
+}
+
 #map-detail {
   height: 35%;
 }
 
 .empty-block {
   height: 30px;
+}
+
+.test {
+  position: relative;
 }

@@ -11,8 +11,16 @@ module.exports = {
         }
     },
 
+    clone(object) {
+        return JSON.parse(JSON.stringify(object))
+    },
+
     isNull(object) {
         return object === undefined || object === null
+    },
+
+    isObjectEmpty(object) {
+        return object === undefined || object === null || object === {}
     },
 
     isEmpty(array) {
@@ -20,8 +28,11 @@ module.exports = {
     },
 
     isStrNull(object) {
-        console.log(object)
         return object === undefined || object === null || object === ''
+    },
+
+    equals(o1, o2) {
+        return !this.isStrNull(o1) && !this.isStrNull(o2) && o1.toString() === o2.toString()
     },
 
     /**

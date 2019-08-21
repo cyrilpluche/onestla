@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-const User = require('../models').User
+const util = require('./Util')
 
 module.exports = {
     encode(payload) {
@@ -14,6 +14,8 @@ module.exports = {
 
         const token = req.headers['authorization']
 
+        console.log(token)
+
         if (!token) res.status(401).send('Unauthorized')
         else {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -24,6 +26,13 @@ module.exports = {
             })
         }
 
+    },
+
+    getId(token) {
+        const decoded = this.decode(token)
+        let id = null
+        if (!util.isNull(decoded) && !util.isNull(decoded._id)) id = decoded._id
+        return id
     }
 
 }

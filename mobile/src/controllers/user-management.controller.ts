@@ -11,9 +11,9 @@ export class UserManagementController {
 
     }
 
-    getUsers(): Promise<User[]> {
+    getUsers(admin: boolean = false): Promise<User[]> {
         let users: User[] = []
-        return this._userService.getUsers()
+        return this._userService.getUsers(admin)
             .then(res => {
                 users = res
             })
@@ -21,6 +21,19 @@ export class UserManagementController {
                 // console.log(err)
             })
             .then(() => users as User[])
+    }
+
+    updateUsers(users: User[]): Promise<Boolean> {
+        let success = false
+        return this._userService.updateMultiple(users)
+            .then(res => {
+                console.log(res)
+                success = true
+            })
+            .catch(err => {
+                // console.log(err)
+            })
+            .then(() => success)
     }
 
     searchUsers(search: string): Promise<User[]> {

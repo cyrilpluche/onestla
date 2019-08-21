@@ -1,3 +1,8 @@
 <ion-item class="oel-input" (click)="onClick(user)">
+    <ion-avatar slot="start">
+        <img src="../../../assets/images/pp.jpg">
+    </ion-avatar>
     <ion-label color="primary" text-wrap>{{ capitalize([user.firstname, user.lastname]) }}</ion-label>
+    <ion-button *ngIf="!isNull(okMsg)" (click)="onOk(user)">{{okMsg}}</ion-button>
+    <ion-button *ngIf="!isNull(koMsg)" (click)="onKo(user)" color="light">{{koMsg}}</ion-button>
 </ion-item>

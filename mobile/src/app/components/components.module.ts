@@ -6,17 +6,12 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PageTitleComponent} from "./page-title/page-title.component";
-import {UserItemComponent} from "./user-item/user-item.component";
-import {NumberItemComponent} from "./number-item/number-item.component";
-import {ButtonComponent} from "./button/button.component";
 import {CommonModule} from "@angular/common";
+import {UserListComponent} from "./user-list/user-list.component";
+import {LibraryModule} from "../library/library.module";
 
 const components = [
-    PageTitleComponent,
-    UserItemComponent,
-    NumberItemComponent,
-    ButtonComponent
+    UserListComponent
 ]
 
 @NgModule({
@@ -25,7 +20,11 @@ const components = [
         CommonModule,
         IonicModule.forRoot(),
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LibraryModule
+    ],
+    entryComponents: [
+        UserListComponent
     ],
     providers: [
         StatusBar,
@@ -34,5 +33,5 @@ const components = [
     ],
     exports: components
 })
-export class LibraryModule {
+export class ComponentsModule {
 }

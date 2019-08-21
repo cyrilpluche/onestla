@@ -1,4 +1,4 @@
-<ion-grid no-padding *ngIf="user">
+<ion-grid id="header-container" no-padding *ngIf="user">
     <ion-row justify-content-between padding>
 
         <ion-col size="3" no-padding text-center>
@@ -8,17 +8,23 @@
         </ion-col>
 
         <ion-col size="9" no-padding>
-            <oel-number-item [number]="user.friendsSum" [label]="'sauces'"></oel-number-item>
-
-            <!--<ion-row id="follow-details" class="fill-full-height" justify-content-center align-items-center>
-                <oel-number-item [number]="user.friendsSum" [label]="'sauces'"></oel-number-item>
-                <ion-button (click)="openProfileForm()" size="small" fill="outline" expand="block">Modifier le profil</ion-button>
-            </ion-row>-->
+            <oel-number-item (evClick)="openUserList()" [number]="user.friendsSum" [label]="'sauces'"></oel-number-item>
         </ion-col>
 
     </ion-row>
-    <ion-row padding>
+    <ion-row padding class="test">
         <ion-label class="fill-full-width" color="primary">{{ _util.capitalize([user.firstname, user.lastname]) }}</ion-label>
         <oel-button class="fill-full-width" (evClick)="buttonAction()" [label]="buttonLabel"></oel-button>
     </ion-row>
 </ion-grid>
+
+<ion-list>
+    <oel-user-item
+            *ngFor="let user of notifications"
+            [user]="user"
+            [okMsg]="'Accepter'"
+            [koMsg]="'Bof'"
+            (evOk)="becomeFriend(user)"
+            (evKo)="refuseFriend(user)"
+    ></oel-user-item>
+</ion-list>

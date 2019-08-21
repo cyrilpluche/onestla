@@ -12,12 +12,23 @@ const FRIEND_STATE = require('../enums').FRIEND_STATE
 
 // helpers
 
-const getAuthorization = (user1, user2, state) => {
-    if (!user1 || !user2) return Authorization.READONLY
-    else if (user1.toString() === user2.toString()) return Authorization.UPDATE
-    else if (parseInt(state) === FRIEND_STATE.PENDING) return Authorization.PENDING
-    else if (parseInt(state) === FRIEND_STATE.SUCCESS) return Authorization.FRIEND
-    else return Authorization.READONLY
+const getAuthorization = (tokenId, userId, friendship) => {
+    let authorization = Authorization.READONLY
+    // One id is null ? : lower authorization
+    if (!Util.isStrNull(tokenId) && !Util.isStrNull(userId)) {
+        // Ids are equals : logged user can update
+        if (Util.equals(tokenId, userId)) authorization = Authorization.UPDATE
+        else if (!Util.isNull(friendship)) {
+            // Friendship is pending : is logged user sent or received the invitation ?
+            if (Util.equals(friendship.state, FRIEND_STATE.PENDING)) {
+                if (Util.equals(tokenId, friendship.idAsker)) authorization = Authorization.WAITING
+                else if (Util.equals(tokenId, friendship.idReceiver)) authorization = Authorization.PENDING
+            }
+            // Friendship is done : hi my men
+            else if (Util.equals(friendship.state, FRIEND_STATE.SUCCESS)) authorization = Authorization.FRIEND
+        }
+    }
+    return authorization
 }
 
 module.exports = {
@@ -31,6 +42,15 @@ module.exports = {
             })
     },
 
+    adminFindAll(req, res, next) {
+        User.find(req.query)
+            .select(["email", "firstname", "lastname", "status"])
+            .then(users => res.send(users))
+            .catch(err => {
+                Request.errorHandler(res, Status.USER_ERROR, err.message)
+            })
+    },
+
     findAll(req, res, next) {
         User.find(req.query)
             .select("-password")
@@ -41,37 +61,62 @@ module.exports = {
     },
 
     findProfile(req, res, next) {
-        const token = Jwt.decode(req.headers['authorization'])
-        User.find(req.query)
-            .select("-password")
-            .then(users => {
-                let authorization = Authorization.READONLY
-                let user = Object.assign({authorization: authorization}, users[0]._doc)
+        const tokenId = Jwt.getId(req.headers['authorization'])
+        const userId = req.query._id
 
-                if (token !== undefined && token !== null) {
-                    user.authorization = getAuthorization(token._id, users[0]._id, null)
+        let user = {authorization: Authorization.READONLY}
+        let query = {_id: userId}
 
-                    if (authorization !== Authorization.UPDATE) {
-                        Friend.find({idAsker: token._id, idReceiver: users[0]._id})
-                            .then(friend => {
-                                if (friend[0] !== undefined && friend[0] !== null) {
-                                    user.authorization = getAuthorization(token._id, users[0]._id, friend[0].state)
-                                    console.log(getAuthorization(token._id, users[0]._id, friend[0].state))
-                                    console.log(user.authorization)
+        if (!Util.isStrNull(userId)) {
+            // Find the user
+            User.find(query)
+                .select("-password")
+                .then(users => {
+
+                    let or = [
+                        {idAsker: tokenId, state: FRIEND_STATE.SUCCESS},
+                        {idReceiver: tokenId, state: FRIEND_STATE.SUCCESS}
+                    ]
+
+                    Friend.where({$or: or}).countDocuments()
+                        .then(count => {
+                            user.friendsSum = count
+                            // Create user
+                            if (!Util.isNull(users[0])) {
+                                user = Object.assign(user, users[0]._doc)
+                                user.authorization = getAuthorization(tokenId, userId, null)
+
+                                // Check friendship if needed
+                                if (!Util.equals(user.authorization, Authorization.UPDATE)) {
+
+                                    or = [
+                                        {idAsker: tokenId, idReceiver: userId},
+                                        {idAsker: userId, idReceiver: tokenId}
+                                    ]
+
+                                    // Get friendship
+                                    Friend.find({$or: or})
+                                        .then(friendship => {
+                                            if (!Util.isObjectEmpty(friendship)) {
+                                                user.authorization = getAuthorization(tokenId, userId, friendship[0])
+                                            }
+                                            res.send(user)
+                                        })
+                                } else {
+                                    res.send(user)
                                 }
-                                res.send(user)
-                            })
-                    } else {
-                        res.send(user)
-                    }
+                            } else {
+                                res.send({})
+                            }
+                        })
+                })
+                .catch(err => {
+                    Request.errorHandler(res, Status.SERVER_ERROR, err.message)
+                })
+        } else {
+            Request.errorHandler(res, Status.USER_ERROR, 'property _id is missing from the query')
+        }
 
-                } else {
-                    res.send(user)
-                }
-            })
-            .catch(err => {
-                res.status(400).send({error: err.message})
-            })
     },
 
     search(req, res, next) {
@@ -133,6 +178,29 @@ module.exports = {
         User.updateOne(req.query, req.body)
             .then(isUpdate => res.send(isUpdate))
             .catch(err => res.status(400).send({error: err.message}))
+    },
+
+    updateMany(req, res, next) {
+        const users = req.body
+        const result = []
+
+        if (!Util.isEmpty(users)) {
+            for (let user of users) {
+                User.updateOne({_id: user._id}, user)
+                    .then(isUpdate => {
+                        result.push({id: user._id, success: true, error: null})
+                    })
+                    .catch(err => {
+                        result.push({id: user._id, success: false, error: error.message})
+                    })
+                    .then(() => {
+                        if (users.indexOf(user) === users.length - 1) res.send(result)
+                    })
+            }
+        } else {
+            Request.errorHandler(res, Status.USER_ERROR, "No users provided.")
+        }
+
     },
 
     delete(req, res, next) {

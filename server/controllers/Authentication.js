@@ -1,7 +1,9 @@
 const Club = require('../models').Club
 const User = require('../models').User
 const Jwt = require('../helpers').Jwt
-
+const Util = require('../helpers').Util
+const Request = require('../helpers').Request
+const RES_STATUS = require('../enums').RES_STATUS
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -43,8 +45,11 @@ module.exports = {
     ,
 
     logged(req, res, next) {
-        Club.updateOne(req.query, req.body)
-            .then(isUpdate => res.send(isUpdate))
-            .catch(err => res.status(400).send({error: err.message}))
+        const token = req.headers['authorization']
+        const tokenId = Jwt.getId(token)
+        res.send({
+            token: token,
+            id: tokenId
+        })
     }
 }

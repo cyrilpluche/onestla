@@ -24,20 +24,34 @@ export class UserService {
             })
     }
 
+    logged() {
+        return Api.get('/authentication/logged')
+            .then(res => {
+                return res as {token: string, id: string}
+            })
+    }
+
     sign(user: User): Promise<User> {
         return Api.post('/authentication/signup', user).then(res => new User(res))
     }
 
     getProfile(id: string): Promise<User> {
         return Api.get('/user/profile?_id=' + id).then(res => {
-            console.log(res)
             return new User(res)
         })
     }
 
-    getUsers(): Promise<User[]> {
-        return Api.get('/user/find_all').then(res => {
+    getUsers(admin: boolean): Promise<User[]> {
+        let url = '/user/find_all'
+        if (admin) url = '/user/admin/find_all'
+        return Api.get(url).then(res => {
             return res as User[]
+        })
+    }
+
+    updateMultiple(body: User[] = []): Promise<any> {
+        return Api.put('/user/admin/update_many', body).then(res => {
+            return res
         })
     }
 

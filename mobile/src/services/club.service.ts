@@ -14,21 +14,12 @@ export class ClubService {
 
     }
 
-    static getClubs() {
-        /*if (!environment.fakeData) {
-            let c1 = new Club()
-            c1.id = 1
-            c1.name = 'Panama Café'
-            c1.lat = 43.606153
-            c1.lng = 3.877875
-            c1.description = 'Le club latino le plus chaud de la ville'
-            c1.type = 'boite de nuit'
-            c1.iconUrl = 'https://pbs.twimg.com/profile_images/2883144287/d0fcaf6edc8c2886763b8e3b2cc91436_400x400.jpeg'
-            return [c1]
-        } else {
-            return Api.get('/club/find_all')
-        }*/
-        return Api.get('/club/find_all')
+    getClubs(admin: boolean = false): Promise<Club[]> {
+        let url = '/club/find_all'
+        if (admin) url = '/club/admin/find_all'
+        return Api.get(url).then(res => {
+            return res as Club[]
+        })
     }
 
     static getFriendList(): User[] {

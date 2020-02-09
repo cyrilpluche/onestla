@@ -12,3 +12,8 @@ export enum UserStatusEnum {
     VERIFIED = 2,
     ADMIN = 3
 }
+
+export enum ClubTypeEnum {
+    NIGHTCLUB = 0,
+    BAR = 1
+}

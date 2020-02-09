@@ -12,7 +12,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: '../user-management/user-management.module#UserManagementPageModule'
+            loadChildren: '../club-management/club-management.module#ClubManagementPageModule'
           }
         ]
       },

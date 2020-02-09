@@ -116,7 +116,7 @@ export class ProfileHeaderComponent implements OnInit {
             component: ProfileFormComponent,
             cssClass: 'oel-modal',
             componentProps: {
-                users: this.user
+                user: this.user
             }
         });
         return await modal.present();

@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ title }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let tab of tabs" (click)="navigate(tab.url)">
+            <ion-icon [name]="tab.icon"></ion-icon>
+            <ion-label>{{tab.label}}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

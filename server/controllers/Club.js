@@ -1,5 +1,5 @@
 const Club = require('../models').Club
-
+const Status = require('../enums').RES_STATUS
 module.exports = {
     create (req, res, next) {
         Club.create(req.body)
@@ -18,6 +18,15 @@ module.exports = {
             })
             .catch(err => {
                 res.status(400).send({ error: err.message })
+            })
+    },
+
+    adminFindAll(req, res, next) {
+        Club.find(req.query)
+            .select(["name", "description", "lat", "lng", "type"])
+            .then(clubs => res.send(clubs))
+            .catch(err => {
+                Request.errorHandler(res, Status.USER_ERROR, err.message)
             })
     },
 

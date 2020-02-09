@@ -45,6 +45,7 @@ export class UserService {
         let url = '/user/find_all'
         if (admin) url = '/user/admin/find_all'
         return Api.get(url).then(res => {
+            console.log(res)
             return res as User[]
         })
     }

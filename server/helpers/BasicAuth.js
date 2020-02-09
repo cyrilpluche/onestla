@@ -19,7 +19,7 @@ module.exports = {
                     c(null, false)
                 }
 
-                //return c(null, basicAuth.safeCompare(password, user[0].password))
+                //return c(null, basicAuth.safeCompare(password, club[0].password))
             })
             .catch(err => {
                 console.log(err)

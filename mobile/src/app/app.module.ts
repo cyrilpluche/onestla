@@ -27,6 +27,7 @@ import { StoreModule } from '@ngrx/store'
         IonicModule.forRoot(),
         StoreModule.forRoot(reducers),
         AppRoutingModule,
+        ReactiveFormsModule,
         FormsModule
     ],
     providers: [

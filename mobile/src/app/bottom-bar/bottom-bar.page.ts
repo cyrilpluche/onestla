@@ -7,8 +7,9 @@ import {UserState} from "../../store/reducers/user.reducer";
 import {Utility} from "../../helpers/utility.helper";
 import {Router} from "@angular/router";
 
-interface Tabs {
+export interface Tabs {
     url: string
+    label?: string
     icon: string
 }
 
@@ -24,7 +25,8 @@ export class BottomBarPage implements OnInit {
     tabs: Tabs[] = [
         {url: 'map', icon: 'planet'},
         {url: 'search', icon: 'search'},
-        {url: 'profile/', icon: 'person'}
+        {url: 'profile/', icon: 'person'},
+        {url: 'admin', icon: 'add'}
     ]
 
     constructor(public store: Store<State>,

@@ -16,10 +16,10 @@ const getAuthorization = (tokenId, userId, friendship) => {
     let authorization = Authorization.READONLY
     // One id is null ? : lower authorization
     if (!Util.isStrNull(tokenId) && !Util.isStrNull(userId)) {
-        // Ids are equals : logged user can update
+        // Ids are equals : logged club can update
         if (Util.equals(tokenId, userId)) authorization = Authorization.UPDATE
         else if (!Util.isNull(friendship)) {
-            // Friendship is pending : is logged user sent or received the invitation ?
+            // Friendship is pending : is logged club sent or received the invitation ?
             if (Util.equals(friendship.state, FRIEND_STATE.PENDING)) {
                 if (Util.equals(tokenId, friendship.idAsker)) authorization = Authorization.WAITING
                 else if (Util.equals(tokenId, friendship.idReceiver)) authorization = Authorization.PENDING
@@ -68,7 +68,7 @@ module.exports = {
         let query = {_id: userId}
 
         if (!Util.isStrNull(userId)) {
-            // Find the user
+            // Find the club
             User.find(query)
                 .select("-password")
                 .then(users => {
@@ -81,7 +81,7 @@ module.exports = {
                     Friend.where({$or: or}).countDocuments()
                         .then(count => {
                             user.friendsSum = count
-                            // Create user
+                            // Create club
                             if (!Util.isNull(users[0])) {
                                 user = Object.assign(user, users[0]._doc)
                                 user.authorization = getAuthorization(tokenId, userId, null)

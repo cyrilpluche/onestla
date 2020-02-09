@@ -53,6 +53,33 @@ const routes: Routes = [
                 ]
             },
             {
+                path: 'admin',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../admin/admin-center/admin-center.module#AdminCenterPageModule'
+                    }
+                ]
+            },
+            {
+                path: 'admin/users',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../admin/user-management/user-management.module#UserManagementPageModule'
+                    }
+                ]
+            },
+            {
+                path: 'admin/clubs',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../admin/club-management/club-management.module#ClubManagementPageModule'
+                    }
+                ]
+            },
+            {
                 path: '',
                 redirectTo: '/home/map',
                 pathMatch: 'full'

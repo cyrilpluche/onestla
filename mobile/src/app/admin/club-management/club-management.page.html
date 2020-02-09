@@ -1,0 +1,43 @@
+<ion-header no-border>
+    <ion-toolbar>
+        <ion-buttons slot="primary">
+            <ion-button (click)="saveChanges()">
+                <ion-icon slot="icon-only" name="save"></ion-icon>
+            </ion-button>
+            <ion-button (click)="openClubForm()">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ title }}
+        </ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <oel-loader-list *ngIf="clubs" [loading]="loading" [message]="clubs.length + ' résultats'"></oel-loader-list>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item-sliding *ngFor="let club of clubs">
+            <ion-item-options side="start">
+                <ion-item-option>
+                    <ion-icon size="large" name="trash"></ion-icon>
+                </ion-item-option>
+                <ion-item-option color="danger">Share</ion-item-option>
+            </ion-item-options>
+
+            <ion-item class="oel-input">
+                <ion-label color="primary" position="stacked">{{capitalize([club.name])}}</ion-label>
+                <ion-select placeholder="Type" [(ngModel)]="club.type">
+                    <ion-select-option [value]="clubType.NIGHTCLUB">Night club</ion-select-option>
+                    <ion-select-option [value]="clubType.BAR">Bar</ion-select-option>
+                </ion-select>
+                <ion-textarea [(ngModel)]="club.description"></ion-textarea>
+            </ion-item>
+        </ion-item-sliding>
+
+
+
+    </ion-list>
+</ion-content>
